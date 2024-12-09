@@ -301,7 +301,7 @@ script = ExtResource("1_43ilj")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_e0ny0")
 animation = &"side_walk"
-frame_progress = 0.630066
+frame_progress = 0.293684
 offset = Vector2(0, -6)
 
 [node name="detection_area" type="Area2D" parent="."]

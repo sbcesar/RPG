@@ -19,10 +19,6 @@ config/icon="res://icon.svg"
 
 World="*res://scripts/world.cs"
 
-[display]
-
-window/stretch/scale=4.0
-
 [dotnet]
 
 project/assembly_name="RPG"

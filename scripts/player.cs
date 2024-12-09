@@ -4,7 +4,7 @@ using System;
 public partial class player : CharacterBody2D
 {
     private float speed = 100f;
-    private float health = 100f;
+    private float health = 200f;
     private String currentDirection = "none";
     private bool attack_in_progress;
     private bool enemy_in_attack_range;
