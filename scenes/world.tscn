@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=4 uid="uid://babk8ixv4ers3"]
+[gd_scene load_steps=15 format=4 uid="uid://babk8ixv4ers3"]
 
 [ext_resource type="PackedScene" uid="uid://cmo1l6rdmvygf" path="res://scenes/player.tscn" id="1_67rlc"]
+[ext_resource type="Script" path="res://scripts/world.cs" id="1_q7cya"]
 [ext_resource type="Texture2D" uid="uid://byt1rk617cpxj" path="res://sprites/tilesets/plains.png" id="1_vnmux"]
 [ext_resource type="Texture2D" uid="uid://wep3xj5b2x0o" path="res://sprites/tilesets/grass.png" id="2_3n53m"]
 [ext_resource type="PackedScene" uid="uid://c2bybtxai4vti" path="res://scenes/enemy.tscn" id="2_c0qf4"]
@@ -233,11 +234,12 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_vatwa")
 
 [node name="world" type="Node2D"]
+script = ExtResource("1_q7cya")
 
 [node name="Player" parent="." instance=ExtResource("1_67rlc")]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(20, 111)
+position = Vector2(144, 119)
 up_direction = Vector2(0, 1)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

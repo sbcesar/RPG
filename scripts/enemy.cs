@@ -4,6 +4,8 @@ using System;
 public partial class enemy : CharacterBody2D
 {
 	private float speed = 50.0f;
+	private float health = 100.0f;
+	private bool player_in_attack_range;
 	private bool playerChased;
 	private player player;
 	private AnimatedSprite2D sprite;
@@ -17,6 +19,8 @@ public partial class enemy : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		deal_with_damage();
+		
 		if (playerChased && player != null)
         {
 	        Position += (player.Position - Position).Normalized() * speed * (float)delta;
@@ -49,6 +53,34 @@ public partial class enemy : CharacterBody2D
 		}
 		
 	}
+	
+	private void _on_player_hitbox_body_entered(Node2D body)
+	{
+		if (body.HasMethod("playerItself"))
+		{
+			player_in_attack_range = true;
+		}
+	}
+
+	private void _on_player_hitbox_body_exited(Node2D body)
+	{
+		if (body.HasMethod("playerItself"))
+		{
+			player_in_attack_range = false;
+		}
+	}
+
+	private void deal_with_damage()
+	{
+		if (player_in_attack_range && world.player_current_attack)
+		{
+			health -= 20;
+			if (health <= 0)
+			{
+				QueueFree();
+			}
+		}
+	}
 
 	private void _on_detection_area_body_entered(Node2D body)
 	{
@@ -67,6 +99,11 @@ public partial class enemy : CharacterBody2D
 			player = null;
 			playerChased = false;
 		}
+		
+	}
+
+	private void enemyItself()
+	{
 		
 	}
 }
