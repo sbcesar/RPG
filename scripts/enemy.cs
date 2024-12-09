@@ -7,13 +7,16 @@ public partial class enemy : CharacterBody2D
 	private float health = 100.0f;
 	private bool player_in_attack_range;
 	private bool playerChased;
+	private bool can_take_damage = true;
 	private player player;
 	private AnimatedSprite2D sprite;
+	private Timer take_damage_timer;
 	
 
 	public override void _Ready()
 	{
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		take_damage_timer = GetNode<Timer>("take_damage_cooldown");
 		sprite.Play("front_idle");
 	}
 	
@@ -54,7 +57,7 @@ public partial class enemy : CharacterBody2D
 		
 	}
 	
-	private void _on_player_hitbox_body_entered(Node2D body)
+	private void _on_enemy_hitbox_body_entered(Node2D body)
 	{
 		if (body.HasMethod("playerItself"))
 		{
@@ -62,7 +65,7 @@ public partial class enemy : CharacterBody2D
 		}
 	}
 
-	private void _on_player_hitbox_body_exited(Node2D body)
+	private void _on_enemy_hitbox_body_exited(Node2D body)
 	{
 		if (body.HasMethod("playerItself"))
 		{
@@ -74,11 +77,18 @@ public partial class enemy : CharacterBody2D
 	{
 		if (player_in_attack_range && world.player_current_attack)
 		{
-			health -= 20;
-			if (health <= 0)
+			if (can_take_damage == true)
 			{
-				QueueFree();
+				health -= 20f;
+				take_damage_timer.Start();
+				can_take_damage = false;
+				GD.Print("Slime health: " + health);
+                if (health <= 0f)
+                {
+                	QueueFree();
+                }
 			}
+			
 		}
 	}
 
@@ -105,5 +115,10 @@ public partial class enemy : CharacterBody2D
 	private void enemyItself()
 	{
 		
+	}
+
+	private void _on_take_damage_cooldown_timeout()
+	{
+		can_take_damage = true;
 	}
 }
