@@ -10,12 +10,14 @@ public partial class enemy : CharacterBody2D
 	private bool can_take_damage = true;
 	private player player;
 	private AnimatedSprite2D sprite;
+	private ProgressBar healthBar;
 	private Timer take_damage_timer;
 	
 
 	public override void _Ready()
 	{
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		healthBar = GetNode<ProgressBar>("ProgressBar");
 		take_damage_timer = GetNode<Timer>("take_damage_cooldown");
 		sprite.Play("front_idle");
 	}
@@ -75,14 +77,15 @@ public partial class enemy : CharacterBody2D
 
 	private void deal_with_damage()
 	{
-		if (player_in_attack_range && world.player_current_attack)
+		if (player_in_attack_range && globalThings.player_current_attack)
 		{
-			if (can_take_damage == true)
+			if (can_take_damage)
 			{
 				health -= 20f;
 				take_damage_timer.Start();
 				can_take_damage = false;
 				GD.Print("Slime health: " + health);
+				update_health();
                 if (health <= 0f)
                 {
                 	QueueFree();
@@ -90,6 +93,11 @@ public partial class enemy : CharacterBody2D
 			}
 			
 		}
+	}
+
+	private void update_health()
+	{
+		healthBar.Value = health;
 	}
 
 	private void _on_detection_area_body_entered(Node2D body)

@@ -413,8 +413,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_r0ka1"]
-radius = 5.09902
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gipk3"]
+radius = 7.5
+height = 21.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d07nm"]
 radius = 17.0
@@ -430,10 +431,9 @@ sprite_frames = SubResource("SpriteFrames_k1ciy")
 animation = &"side_idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 y_sort_enabled = true
-position = Vector2(0, 2)
-shape = SubResource("CircleShape2D_r0ka1")
+position = Vector2(0.5, -3.5)
+shape = SubResource("CapsuleShape2D_gipk3")
 
 [node name="player_hitbox" type="Area2D" parent="."]
 
@@ -448,7 +448,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(62, 44)
+position = Vector2(0, -1)
 zoom = Vector2(4, 4)
 limit_left = 0
 limit_top = 0
@@ -457,7 +457,22 @@ limit_bottom = 254
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
+[node name="regen_timer" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(8.42288e-06, 0.802479, 0.0971368, 1)
+offset_left = -7.0
+offset_top = -16.0
+offset_right = 143.0
+offset_bottom = 4.0
+scale = Vector2(0.1, 0.1)
+value = 100.0
+show_percentage = false
+
 [connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="deal_attack" to="." method="_on_deal_attack_timeout"]
+[connection signal="timeout" from="regen_timer" to="." method="_on_regen_timer_timeout"]

@@ -4,21 +4,25 @@ using System;
 public partial class player : CharacterBody2D
 {
     private float speed = 100f;
-    private float health = 200f;
+    private float health = 100f;
     private String currentDirection = "none";
     private bool attack_in_progress;
     private bool enemy_in_attack_range;
     private bool enemy_attack_cooldown = true;
     private bool player_alive = true;
     private AnimatedSprite2D sprite;
+    private ProgressBar healthBar;
     private Timer timer;
     private Timer attack_timer;
+    private Timer regen_timer;
 
     public override void _Ready()
     {
         sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        healthBar = GetNode<ProgressBar>("ProgressBar");
         timer = GetNode<Timer>("attack_cooldown");
         attack_timer = GetNode<Timer>("deal_attack");
+        regen_timer = GetNode<Timer>("regen_timer");
         sprite.Play("front_idle");
     }
 
@@ -27,14 +31,16 @@ public partial class player : CharacterBody2D
         player_movement(delta);
         enemy_attack();
         attack();
+        update_health();
+        showMenu();
         
         
         if (health <= 0)
         {
-            player_alive = false;   // End game or respawn
+            player_alive = false;
             health = 0f;
-            GD.Print("Player has been killed");
-            QueueFree();
+            
+            GetTree().ChangeSceneToFile("res://scenes/end_menu.tscn");
         }
     }
 
@@ -64,9 +70,11 @@ public partial class player : CharacterBody2D
         if (enemy_in_attack_range && enemy_attack_cooldown)
         {
             health -= 20f;
+            if (health < 0) health = 0;
             enemy_attack_cooldown = false;
             timer.Start();
-            GD.Print(health);
+            GD.Print("Player health: " + health);
+            update_health();
         }
         
     }
@@ -76,7 +84,63 @@ public partial class player : CharacterBody2D
         enemy_attack_cooldown = true;
     }
 
-    public void player_movement(double delta)
+    private void _on_regen_timer_timeout()
+    {
+        if (health < 100)
+        {
+            health += 20f;
+            if (health > 100)
+            {
+                health = 100;
+            }
+        }
+
+        update_health();
+    }
+
+    private void update_health()
+    {
+        healthBar.Value = health;
+    }
+
+    private void showMenu()
+    {
+        // Verifica si la acción "options" ha sido presionada
+        if (Input.IsActionJustPressed("options"))
+        {
+            GD.Print("Options button pressed"); // Mensaje de depuración
+
+            // Verifica en qué escena estamos actualmente
+            if (GetTree().CurrentScene.Name == "menu")
+            {
+                GD.Print("Currently in the menu scene, changing to world"); // Mensaje de depuración
+                // Cambiar a la escena "world"
+                GetTree().ChangeSceneToFile("res://scenes/world.tscn");
+            }
+            else if (GetTree().CurrentScene.Name == "world")
+            {
+                GD.Print("Currently in the world scene, changing to menu"); // Mensaje de depuración
+                // Cambiar a la escena "menu"
+                GetTree().ChangeSceneToFile("res://scenes/menu.tscn");
+            }
+            else if (GetTree().CurrentScene.Name == "route2")
+            {
+                GD.Print("Currently in the route 2 scene, changing to menu"); // Mensaje de depuración
+                // Cambiar a la escena "menu"
+                GetTree().ChangeSceneToFile("res://scenes/menu.tscn");
+            }
+            else
+            {
+                GD.Print("Not in menu or world or route 2 scene"); // Mensaje de depuración
+            }
+        }
+    }
+
+
+
+
+
+    private void player_movement(double delta)
     {
         Vector2 velocity = Velocity;
         
@@ -191,7 +255,7 @@ public partial class player : CharacterBody2D
         String dir = currentDirection;
         if (Input.IsActionJustPressed("attack"))
         {
-            world.player_current_attack = true;
+            globalThings.player_current_attack = true;
             attack_in_progress = true;
 
             if (dir == "right")
@@ -222,7 +286,7 @@ public partial class player : CharacterBody2D
     private void _on_deal_attack_timeout()
     {
         attack_timer.Stop();
-        world.player_current_attack = false;
+        globalThings.player_current_attack = false;
         attack_in_progress = false;
     }
 }

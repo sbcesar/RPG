@@ -1,0 +1,110 @@
+[gd_scene load_steps=9 format=3 uid="uid://0rge10cd3jek"]
+
+[ext_resource type="Script" path="res://scripts/endMenu.cs" id="1_yw6ti"]
+[ext_resource type="Texture2D" uid="uid://cmlaajfxxip12" path="res://sprites/tilesets/background/background_menu.jpeg" id="2_vscub"]
+[ext_resource type="FontFile" uid="uid://ck07jmkj8hurh" path="res://sprites/fonts/GrapeSoda.ttf" id="3_bja2v"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dn5cm"]
+texture = ExtResource("2_vscub")
+modulate_color = Color(0.666569, 0.666569, 0.666569, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ggj82"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q00dm"]
+bg_color = Color(0.65834, 0.65834, 0.65834, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.192157)
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p2hhe"]
+bg_color = Color(0.737193, 0.737193, 0.737193, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.192157)
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t307x"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.192157)
+shadow_size = 5
+shadow_offset = Vector2(0, 3.41)
+
+[node name="end_menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yw6ti")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_dn5cm")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -242.5
+offset_top = -205.0
+offset_right = 242.5
+offset_bottom = -102.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_bja2v")
+theme_override_font_sizes/font_size = 100
+text = "The End"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = 83.0
+offset_right = 98.0
+offset_bottom = 147.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ggj82")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_q00dm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_p2hhe")
+theme_override_styles/normal = SubResource("StyleBoxFlat_t307x")
+text = "Quit"
+
+[connection signal="pressed" from="VBoxContainer/quit" to="." method="_on_quit_pressed"]
