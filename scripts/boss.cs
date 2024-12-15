@@ -1,10 +1,11 @@
 using Godot;
 using System;
 
-public partial class enemy : CharacterBody2D
+public partial class boss : CharacterBody2D
 {
-	private float speed = 50.0f;
-	private float health = 100.0f;
+    
+    private float speed = 50.0f;
+	private float health = 200.0f;
 	private bool player_in_attack_range;
 	private bool playerChased;
 	private bool can_take_damage = true;
