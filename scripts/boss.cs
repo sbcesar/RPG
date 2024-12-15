@@ -84,14 +84,14 @@ public partial class boss : CharacterBody2D
 		{
 			if (can_take_damage)
 			{
-				health -= 20f;
+				health -= player.GetAttackDamage();
 				take_damage_timer.Start();
 				can_take_damage = false;
 				GD.Print("Slime health: " + health);
 				update_health();
                 if (health <= 0f)
                 {
-                	QueueFree();
+	                GetTree().ChangeSceneToFile("res://scenes/end_menu.tscn");
                 }
 			}
 			

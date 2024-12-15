@@ -5,6 +5,7 @@ public partial class player : CharacterBody2D
 {
     private float speed = 100f;
     private float health = 100f;
+    private float attackDamage = 20f;
     private String currentDirection = "none";
     private bool attack_in_progress;
     private bool enemy_in_attack_range;
@@ -42,6 +43,11 @@ public partial class player : CharacterBody2D
             
             GetTree().ChangeSceneToFile("res://scenes/end_menu.tscn");
         }
+    }
+    
+    public float GetAttackDamage()
+    {
+        return attackDamage;
     }
 
     private void _on_player_hitbox_body_entered(Node2D body)
@@ -288,5 +294,11 @@ public partial class player : CharacterBody2D
         attack_timer.Stop();
         globalThings.player_current_attack = false;
         attack_in_progress = false;
+    }
+    
+    public void IncreaseAttackDamage(float amount)
+    {
+        attackDamage += amount;
+        GD.Print("Nuevo daño de ataque: " + attackDamage);
     }
 }

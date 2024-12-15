@@ -1,7 +1,8 @@
-[gd_scene load_steps=57 format=3 uid="uid://cmo1l6rdmvygf"]
+[gd_scene load_steps=59 format=3 uid="uid://cmo1l6rdmvygf"]
 
 [ext_resource type="Script" path="res://scripts/player.cs" id="1_fglgb"]
 [ext_resource type="Texture2D" uid="uid://li5q4l2r5o27" path="res://sprites/characters/player.png" id="2_tfo3f"]
+[ext_resource type="Texture2D" uid="uid://cmlaajfxxip12" path="res://sprites/tilesets/background/background_menu.jpeg" id="3_4tgqu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ef8uq"]
 atlas = ExtResource("2_tfo3f")
@@ -417,6 +418,10 @@ animations = [{
 radius = 7.5
 height = 21.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l6jc7"]
+texture = ExtResource("3_4tgqu")
+modulate_color = Color(0.666569, 0.666569, 0.666569, 1)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_d07nm"]
 radius = 17.0
 
@@ -435,6 +440,14 @@ animation = &"side_idle"
 y_sort_enabled = true
 position = Vector2(0.5, -3.5)
 shape = SubResource("CapsuleShape2D_gipk3")
+
+[node name="Panel" type="Panel" parent="CollisionShape2D"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_l6jc7")
 
 [node name="player_hitbox" type="Area2D" parent="."]
 

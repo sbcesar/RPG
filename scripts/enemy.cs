@@ -83,7 +83,7 @@ public partial class enemy : CharacterBody2D
 		{
 			if (can_take_damage)
 			{
-				health -= 20f;
+				health -= player.GetAttackDamage();
 				take_damage_timer.Start();
 				can_take_damage = false;
 				GD.Print("Slime health: " + health);
