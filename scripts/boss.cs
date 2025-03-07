@@ -91,6 +91,7 @@ public partial class boss : CharacterBody2D
 				update_health();
                 if (health <= 0f)
                 {
+	                player.SetScore(500);
 	                GetTree().ChangeSceneToFile("res://scenes/end_menu.tscn");
                 }
 			}

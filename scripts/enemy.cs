@@ -90,6 +90,10 @@ public partial class enemy : CharacterBody2D
 				update_health();
                 if (health <= 0f)
                 {
+	                if (player != null)
+	                {
+		                player.SetScore(10);
+	                }
                 	QueueFree();
                 }
 			}

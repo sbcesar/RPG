@@ -1,11 +1,13 @@
-[gd_scene load_steps=16 format=4 uid="uid://babk8ixv4ers3"]
+[gd_scene load_steps=18 format=4 uid="uid://babk8ixv4ers3"]
 
 [ext_resource type="PackedScene" uid="uid://cmo1l6rdmvygf" path="res://scenes/player.tscn" id="1_67rlc"]
 [ext_resource type="Script" path="res://scripts/world.cs" id="1_q7cya"]
 [ext_resource type="Texture2D" uid="uid://byt1rk617cpxj" path="res://sprites/tilesets/plains.png" id="1_vnmux"]
 [ext_resource type="Texture2D" uid="uid://wep3xj5b2x0o" path="res://sprites/tilesets/grass.png" id="2_3n53m"]
 [ext_resource type="PackedScene" uid="uid://c2bybtxai4vti" path="res://scenes/enemy.tscn" id="2_c0qf4"]
+[ext_resource type="PackedScene" uid="uid://4l5fxktdoigv" path="res://scenes/header.tscn" id="2_o66md"]
 [ext_resource type="Texture2D" uid="uid://doxgsgwk7yqxw" path="res://sprites/objects/objects.png" id="3_m01b2"]
+[ext_resource type="Script" path="res://scripts/PlayerApi.cs" id="8_qvq63"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wb2ls"]
 texture = ExtResource("1_vnmux")
@@ -239,6 +241,8 @@ size = Vector2(36, 58)
 [node name="world" type="Node2D"]
 script = ExtResource("1_q7cya")
 
+[node name="header" parent="." instance=ExtResource("2_o66md")]
+
 [node name="Player" parent="." instance=ExtResource("1_67rlc")]
 z_index = 1
 y_sort_enabled = true
@@ -278,6 +282,9 @@ polygon = PackedVector2Array(-1, -1, 402, 0, 404, 46, 434, 47, 434, 95, 510, 94,
 [node name="CollisionShape2D" type="CollisionShape2D" parent="route_transition_point"]
 position = Vector2(706, 121)
 shape = SubResource("RectangleShape2D_eel8x")
+
+[node name="PlayerApi" type="HTTPRequest" parent="."]
+script = ExtResource("8_qvq63")
 
 [connection signal="body_entered" from="route_transition_point" to="." method="_on_route_transition_point_body_entered"]
 [connection signal="body_exited" from="route_transition_point" to="." method="_on_route_transition_point_body_exited"]

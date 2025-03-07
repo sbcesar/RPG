@@ -3,6 +3,8 @@ using System;
 
 public partial class globalThings : Node
 {
+	public static int playerScore = 0;
+	
 	public static bool player_current_attack = false;
 	public static String current_scene = "world";
 	public static bool transition_scene = false;
@@ -13,6 +15,11 @@ public partial class globalThings : Node
 	public static string last_scene = "";
 	public static bool game_first_load = true;
 
+	public static void UpdatePlayerScore(int newScore)
+	{
+		playerScore = newScore;
+	}
+	
 	public static void finish_changescenes()
 	{
 		if (transition_scene)

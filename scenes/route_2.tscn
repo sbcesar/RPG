@@ -1,11 +1,13 @@
-[gd_scene load_steps=15 format=4 uid="uid://dfjdi3dltmwmt"]
+[gd_scene load_steps=17 format=4 uid="uid://dfjdi3dltmwmt"]
 
 [ext_resource type="Script" path="res://scripts/route2.cs" id="1_j040a"]
 [ext_resource type="Texture2D" uid="uid://byt1rk617cpxj" path="res://sprites/tilesets/plains.png" id="1_oddyd"]
+[ext_resource type="PackedScene" uid="uid://4l5fxktdoigv" path="res://scenes/header.tscn" id="2_n574a"]
 [ext_resource type="Texture2D" uid="uid://wep3xj5b2x0o" path="res://sprites/tilesets/grass.png" id="2_r1j60"]
 [ext_resource type="PackedScene" uid="uid://b33c1jnicqpxf" path="res://scenes/boss.tscn" id="3_2yfr7"]
 [ext_resource type="Texture2D" uid="uid://doxgsgwk7yqxw" path="res://sprites/objects/objects.png" id="3_g5mya"]
 [ext_resource type="PackedScene" uid="uid://cmo1l6rdmvygf" path="res://scenes/player.tscn" id="4_7wjfv"]
+[ext_resource type="PackedScene" uid="uid://c2bybtxai4vti" path="res://scenes/enemy.tscn" id="4_agbca"]
 [ext_resource type="PackedScene" uid="uid://b7krgo76pndls" path="res://scenes/sword.tscn" id="7_4rhys"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_js8ts"]
@@ -166,14 +168,24 @@ size = Vector2(52, 102)
 [node name="route2" type="Node2D"]
 script = ExtResource("1_j040a")
 
+[node name="header" parent="." instance=ExtResource("2_n574a")]
+offset_left = -163.0
+offset_top = 198.0
+offset_right = -163.0
+offset_bottom = 198.0
+
 [node name="Player" parent="." instance=ExtResource("4_7wjfv")]
 z_index = 1
 y_sort_enabled = true
 position = Vector2(22, 118)
 
-[node name="enemy" parent="." instance=ExtResource("3_2yfr7")]
+[node name="boss" parent="." instance=ExtResource("3_2yfr7")]
 z_index = 1
 position = Vector2(456, 134)
+
+[node name="enemy" parent="." instance=ExtResource("4_agbca")]
+z_index = 1
+position = Vector2(214, 49)
 
 [node name="terrain" type="Node" parent="."]
 
