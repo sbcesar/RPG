@@ -90,11 +90,15 @@ public partial class enemy : CharacterBody2D
 				update_health();
                 if (health <= 0f)
                 {
+	                GD.Print("holauwu");
+	                QueueFree();
 	                if (player != null)
 	                {
+		                GD.Print("hola");
 		                player.SetScore(10);
+		                globalThings.UpdatePlayerScore(10);
+		                
 	                }
-                	QueueFree();
                 }
 			}
 			

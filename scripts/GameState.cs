@@ -3,7 +3,7 @@ using System;
 
 public partial class globalThings : Node
 {
-	public static int playerScore = 0;
+	public static int playerScore;
 	
 	public static bool player_current_attack = false;
 	public static String current_scene = "world";
@@ -15,9 +15,18 @@ public partial class globalThings : Node
 	public static string last_scene = "";
 	public static bool game_first_load = true;
 
+	public override void _Ready()
+	{
+		
+	}
+
 	public static void UpdatePlayerScore(int newScore)
 	{
+		
 		playerScore = newScore;
+		GD.Print("uwuuwuwuwuw");
+		MyNode.UpdateScoreOnServer(playerScore);
+		
 	}
 	
 	public static void finish_changescenes()

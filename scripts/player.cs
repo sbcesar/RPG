@@ -20,7 +20,6 @@ public partial class player : CharacterBody2D
 
     public override void _Ready()
     {
-        globalThings.UpdatePlayerScore(score);
         sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         healthBar = GetNode<ProgressBar>("ProgressBar");
         timer = GetNode<Timer>("attack_cooldown");
