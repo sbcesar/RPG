@@ -55,6 +55,7 @@ public partial class player : CharacterBody2D
     {
         score += newScore;
         globalThings.UpdatePlayerScore(score);
+        globalThings.playerScore = score;
         GD.Print("Puntos actuales: " + score);
     }
     

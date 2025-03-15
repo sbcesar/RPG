@@ -244,8 +244,7 @@ script = ExtResource("1_q7cya")
 [node name="header" parent="." instance=ExtResource("2_o66md")]
 
 [node name="Player" parent="." instance=ExtResource("1_67rlc")]
-z_index = 1
-y_sort_enabled = true
+z_index = 3
 position = Vector2(41, 108)
 up_direction = Vector2(0, 1)
 
@@ -273,6 +272,7 @@ tile_map_data = PackedByteArray("AAAKAAQAAAAAAAEAAAAHAAEAAAAAAAUAAAADAAwAAAAAAAU
 tile_set = SubResource("TileSet_tbhqf")
 
 [node name="collisions" type="StaticBody2D" parent="."]
+collision_layer = 5
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="collisions"]
 polygon = PackedVector2Array(-1, -1, 402, 0, 404, 46, 434, 47, 434, 95, 510, 94, 511, 48, 543, 46, 543, 27, 688, 29, 688, 92, 729, 92, 730, 151, 688, 150, 688, 259, -2, 256, -2, -7, -177, 293, 153, 385, 1007, 235, 950, -141, 427, -183, 13, -54, 4, -6)

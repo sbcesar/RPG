@@ -423,11 +423,10 @@ texture = ExtResource("3_4tgqu")
 modulate_color = Color(0.666569, 0.666569, 0.666569, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d07nm"]
-radius = 17.0
 
 [node name="Player" type="CharacterBody2D"]
-collision_layer = 3
-safe_margin = 0.5
+collision_mask = 6
+safe_margin = 3.0
 script = ExtResource("1_fglgb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -452,6 +451,7 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_l6jc7")
 [node name="player_hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_hitbox"]
+position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_d07nm")
 
 [node name="attack_cooldown" type="Timer" parent="."]

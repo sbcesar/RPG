@@ -25,41 +25,31 @@ public partial class enemy : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		deal_with_damage();
-		
+
 		if (playerChased && player != null)
-        {
-	        Position += (player.Position - Position).Normalized() * speed * (float)delta;
-	        
-	        Vector2 direction = (player.Position - Position).Normalized();
-	        
-	        if (Mathf.Abs(direction.X) > Mathf.Abs(direction.Y))
-	        {
-		        // Movimiento lateral
-		        sprite.Play("side_walk");
-		        sprite.FlipH = direction.X < 0;
-	        }
-	        else
-	        {
-		        if (direction.Y < 0)
-		        {
-			        // Movimiento hacia arriba
-			        sprite.Play("back_walk");
-		        }
-		        else
-		        {
-			        // Movimiento hacia abajo
-			        sprite.Play("front_walk");
-		        }
-	        }
-        }
+		{
+			Vector2 direction = (player.Position - Position).Normalized();
+			Velocity = direction * speed;
+
+			if (Mathf.Abs(direction.X) > Mathf.Abs(direction.Y))
+			{
+				sprite.Play("side_walk");
+				sprite.FlipH = direction.X < 0;
+			}
+			else
+			{
+				sprite.Play(direction.Y < 0 ? "back_walk" : "front_walk");
+			}
+		}
 		else
 		{
+			Velocity = Vector2.Zero;
 			sprite.Play("front_idle");
 		}
 
 		MoveAndSlide();
-
 	}
+
 	
 	private void _on_enemy_hitbox_body_entered(Node2D body)
 	{
@@ -88,22 +78,21 @@ public partial class enemy : CharacterBody2D
 				can_take_damage = false;
 				GD.Print("Slime health: " + health);
 				update_health();
-                if (health <= 0f)
-                {
-	                GD.Print("holauwu");
-	                QueueFree();
-	                if (player != null)
-	                {
-		                GD.Print("hola");
-		                player.SetScore(10);
-		                globalThings.UpdatePlayerScore(10);
-		                
-	                }
-                }
+
+				
+
+				if (health <= 0f)
+				{
+					QueueFree();
+					if (player != null)
+					{
+						player.SetScore(10);
+					}
+				}
 			}
-			
 		}
 	}
+
 
 	private void update_health()
 	{

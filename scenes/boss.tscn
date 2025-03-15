@@ -286,17 +286,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pocm0"]
-radius = 34.5579
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_icsqi"]
 radius = 8.01561
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pocm0"]
+radius = 34.5579
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bddyb"]
 radius = 9.51315
 
 [node name="boss" type="CharacterBody2D"]
 scale = Vector2(2, 2)
+collision_layer = 2
 script = ExtResource("1_pe46b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -304,18 +305,18 @@ sprite_frames = SubResource("SpriteFrames_e0ny0")
 animation = &"front_idle"
 offset = Vector2(0, -6)
 
-[node name="detection_area" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
-shape = SubResource("CircleShape2D_pocm0")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_icsqi")
 
+[node name="detection_area" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+shape = SubResource("CircleShape2D_pocm0")
+
 [node name="enemy_hitbox" type="Area2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_hitbox"]
 position = Vector2(0, -3.5)

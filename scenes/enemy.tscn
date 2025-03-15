@@ -293,11 +293,10 @@ radius = 7.0
 radius = 58.0775
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bddyb"]
-radius = 8.0
 
 [node name="enemy" type="CharacterBody2D"]
-collision_layer = 3
-safe_margin = 0.5
+collision_layer = 2
+safe_margin = 3.0
 script = ExtResource("1_43ilj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -310,14 +309,13 @@ position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_2vnxp")
 
 [node name="detection_area" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
-collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
 shape = SubResource("CircleShape2D_pocm0")
 
 [node name="enemy_hitbox" type="Area2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_hitbox"]
 z_index = 1

@@ -12,14 +12,18 @@ public partial class Header : Control
 		
 		if (scoreValueLabel == null)
 		{
-			GD.PrintErr("❌ No se encontró ScoreLabel/Puntuacion. Revisa la jerarquía.");
+			GD.PrintErr("No se encontró ScoreLabel/Puntuacion. Revisa la jerarquía.");
 		}
 		
-		playerInstance = GetTree().Root.GetNodeOrNull<player>("world/Player");
+		string escenaActual = globalThings.current_scene;
+
+		GD.Print($"Escena actual: {escenaActual}");
+		
+		playerInstance = GetTree().Root.GetNodeOrNull<player>($"{escenaActual}/Player");
 		
 		if (playerInstance == null)
 		{
-			GD.PrintErr("❌ No se encontró el nodo Player en la escena.");
+			GD.PrintErr("No se encontró el nodo Player en la escena.");
 		}
 	}
 

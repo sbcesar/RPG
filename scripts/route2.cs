@@ -29,7 +29,7 @@ public partial class route2 : Node2D
 	{
 		if (globalThings.transition_scene)
 		{
-			if (globalThings.current_scene == "route_2")
+			if (globalThings.current_scene == "route2")
 			{
 				// Actualiza la posición deseada ANTES de cambiar de escena
 				globalThings.player_position_x = 669;

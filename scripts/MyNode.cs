@@ -38,7 +38,6 @@ public partial class MyNode : Node
 
 	public static void UpdateScoreOnServer(int score)
 	{
-		GD.Print("he llegao ivan puto");
 		var personaje = new Dictionary<string, object>
 		{
 			{ "id", 1 },

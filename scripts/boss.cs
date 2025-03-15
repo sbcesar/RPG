@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class boss : CharacterBody2D
 {
@@ -78,7 +79,7 @@ public partial class boss : CharacterBody2D
 		}
 	}
 
-	private void deal_with_damage()
+	private async Task deal_with_damage()
 	{
 		if (player_in_attack_range && globalThings.player_current_attack)
 		{
@@ -91,8 +92,19 @@ public partial class boss : CharacterBody2D
 				update_health();
                 if (health <= 0f)
                 {
-	                player.SetScore(500);
-	                GetTree().ChangeSceneToFile("res://scenes/end_menu.tscn");
+	                
+
+	                if (player != null)
+	                {
+		                player.SetScore(500);
+
+		                await ToSignal(GetTree().CreateTimer(0.5f), "timeout"); 
+						GetTree().ChangeSceneToFile("res://scenes/end_menu.tscn");
+		                
+	                }
+	                
+	                QueueFree();
+	                
                 }
 			}
 			

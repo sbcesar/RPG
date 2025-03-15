@@ -17,14 +17,15 @@ public partial class globalThings : Node
 
 	public override void _Ready()
 	{
-		
+		UpdatePlayerScore(0);
 	}
 
 	public static void UpdatePlayerScore(int newScore)
 	{
-		
+		GD.Print($"Puntuacion recibida que se va a cambiar {newScore}");
+		GD.Print($"Puntuacion global antes {playerScore}");
 		playerScore = newScore;
-		GD.Print("uwuuwuwuwuw");
+		GD.Print($"Puntuacion global despues {playerScore}");
 		MyNode.UpdateScoreOnServer(playerScore);
 		
 	}
@@ -43,7 +44,7 @@ public partial class globalThings : Node
 				// Al salir de `world`, guarda la posición actual
 				player_position_x = player_start_route_1_posx;
 				player_position_y = player_start_route_1_posy;
-				current_scene = "route_2";
+				current_scene = "route2";
 			}
 			else
 			{
@@ -62,7 +63,7 @@ public partial class globalThings : Node
 		{
 			player.Position = new Vector2(player_position_x, player_position_y);
 		}
-		else if (current_scene == "route_2")
+		else if (current_scene == "route2")
 		{
 			player.Position = new Vector2(player_start_route_1_posx, player_start_route_1_posy);
 		}

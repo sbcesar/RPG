@@ -1,17 +1,18 @@
-[gd_scene load_steps=17 format=4 uid="uid://dfjdi3dltmwmt"]
+[gd_scene load_steps=18 format=4 uid="uid://dfjdi3dltmwmt"]
 
-[ext_resource type="Script" path="res://scripts/route2.cs" id="1_j040a"]
-[ext_resource type="Texture2D" uid="uid://byt1rk617cpxj" path="res://sprites/tilesets/plains.png" id="1_oddyd"]
-[ext_resource type="PackedScene" uid="uid://4l5fxktdoigv" path="res://scenes/header.tscn" id="2_n574a"]
-[ext_resource type="Texture2D" uid="uid://wep3xj5b2x0o" path="res://sprites/tilesets/grass.png" id="2_r1j60"]
-[ext_resource type="PackedScene" uid="uid://b33c1jnicqpxf" path="res://scenes/boss.tscn" id="3_2yfr7"]
-[ext_resource type="Texture2D" uid="uid://doxgsgwk7yqxw" path="res://sprites/objects/objects.png" id="3_g5mya"]
-[ext_resource type="PackedScene" uid="uid://cmo1l6rdmvygf" path="res://scenes/player.tscn" id="4_7wjfv"]
-[ext_resource type="PackedScene" uid="uid://c2bybtxai4vti" path="res://scenes/enemy.tscn" id="4_agbca"]
-[ext_resource type="PackedScene" uid="uid://b7krgo76pndls" path="res://scenes/sword.tscn" id="7_4rhys"]
+[ext_resource type="Script" path="res://scripts/route2.cs" id="1_55obm"]
+[ext_resource type="PackedScene" uid="uid://4l5fxktdoigv" path="res://scenes/header.tscn" id="2_u4svi"]
+[ext_resource type="PackedScene" uid="uid://cmo1l6rdmvygf" path="res://scenes/player.tscn" id="3_5dp01"]
+[ext_resource type="PackedScene" uid="uid://b33c1jnicqpxf" path="res://scenes/boss.tscn" id="4_qvryv"]
+[ext_resource type="PackedScene" uid="uid://c2bybtxai4vti" path="res://scenes/enemy.tscn" id="5_jjakj"]
+[ext_resource type="Texture2D" uid="uid://byt1rk617cpxj" path="res://sprites/tilesets/plains.png" id="6_yvtpr"]
+[ext_resource type="Texture2D" uid="uid://wep3xj5b2x0o" path="res://sprites/tilesets/grass.png" id="7_62ong"]
+[ext_resource type="Texture2D" uid="uid://doxgsgwk7yqxw" path="res://sprites/objects/objects.png" id="8_fm7jh"]
+[ext_resource type="PackedScene" uid="uid://b7krgo76pndls" path="res://scenes/sword.tscn" id="9_1jcb8"]
+[ext_resource type="PackedScene" uid="uid://bvo0omhfdq1ph" path="res://scenes/request.tscn" id="10_m2nyi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_js8ts"]
-texture = ExtResource("1_oddyd")
+texture = ExtResource("6_yvtpr")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -87,11 +88,11 @@ texture = ExtResource("1_oddyd")
 5:11/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m08v4"]
-texture = ExtResource("2_r1j60")
+texture = ExtResource("7_62ong")
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o2w88"]
-texture = ExtResource("3_g5mya")
+texture = ExtResource("8_fm7jh")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.27557, -0.176777, 5.74524, 0, 5.74524, 5.12652, -6.0988, 4.94975)
 5:0/0 = 0
@@ -124,7 +125,7 @@ sources/1 = SubResource("TileSetAtlasSource_m08v4")
 sources/2 = SubResource("TileSetAtlasSource_o2w88")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_y6gc7"]
-texture = ExtResource("3_g5mya")
+texture = ExtResource("8_fm7jh")
 0:0/0 = 0
 0:0/0/y_sort_origin = 8
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.8125, -1.25, 6.5625, -1.25, 6.1875, 5.25, -6.5625, 5.625)
@@ -166,24 +167,24 @@ sources/0 = SubResource("TileSetAtlasSource_y6gc7")
 size = Vector2(52, 102)
 
 [node name="route2" type="Node2D"]
-script = ExtResource("1_j040a")
+script = ExtResource("1_55obm")
 
-[node name="header" parent="." instance=ExtResource("2_n574a")]
+[node name="header" parent="." instance=ExtResource("2_u4svi")]
 offset_left = -163.0
 offset_top = 198.0
 offset_right = -163.0
 offset_bottom = 198.0
 
-[node name="Player" parent="." instance=ExtResource("4_7wjfv")]
+[node name="Player" parent="." instance=ExtResource("3_5dp01")]
 z_index = 1
 y_sort_enabled = true
 position = Vector2(22, 118)
 
-[node name="boss" parent="." instance=ExtResource("3_2yfr7")]
+[node name="boss" parent="." instance=ExtResource("4_qvryv")]
 z_index = 1
 position = Vector2(456, 134)
 
-[node name="enemy" parent="." instance=ExtResource("4_agbca")]
+[node name="enemy" parent="." instance=ExtResource("5_jjakj")]
 z_index = 1
 position = Vector2(214, 49)
 
@@ -201,6 +202,7 @@ tile_map_data = PackedByteArray("AAAHAAEAAAAAAAUAAAADAAwAAAAAAAUAAAAOAA0AAAAAAAU
 tile_set = SubResource("TileSet_0hbbn")
 
 [node name="colisions" type="StaticBody2D" parent="."]
+collision_layer = 5
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="colisions"]
 polygon = PackedVector2Array(0, 0, 688, 1, 688, 257, -1, 256, -1, 171, -53, 172, -54, 66, 0, 69, -2, -5, -147, 95, -112, 351, 444, 352, 787, 283, 811, -53, 503, -88, 43, -89)
@@ -211,10 +213,12 @@ polygon = PackedVector2Array(0, 0, 688, 1, 688, 257, -1, 256, -1, 171, -53, 172,
 position = Vector2(-27, 118)
 shape = SubResource("RectangleShape2D_hsaqv")
 
-[node name="sword" parent="." instance=ExtResource("7_4rhys")]
+[node name="sword" parent="." instance=ExtResource("9_1jcb8")]
 z_index = 1
 position = Vector2(455, 56)
 scale = Vector2(0.8, 0.8)
+
+[node name="MyNode" parent="." instance=ExtResource("10_m2nyi")]
 
 [connection signal="body_entered" from="route_2_exit" to="." method="_on_route_2_exit_body_entered"]
 [connection signal="body_exited" from="route_2_exit" to="." method="_on_route_2_exit_body_exited"]

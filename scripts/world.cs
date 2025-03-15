@@ -44,10 +44,10 @@ public partial class world : Node2D
 			// Determina qué escena cargar
 			if (globalThings.current_scene == "world")
 			{
-				globalThings.current_scene = "route_2";
-				GetTree().ChangeSceneToFile("res://scenes/route_2.tscn");
+				globalThings.current_scene = "route2";
+				GetTree().ChangeSceneToFile("res://scenes/route2.tscn");
 			}
-			else if (globalThings.current_scene == "route_2")
+			else if (globalThings.current_scene == "route2")
 			{
 				globalThings.current_scene = "world";
 				GetTree().ChangeSceneToFile("res://scenes/world.tscn");
