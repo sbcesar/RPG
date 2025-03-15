@@ -13,6 +13,11 @@ public partial class enemy : CharacterBody2D
 	private ProgressBar healthBar;
 	private Timer take_damage_timer;
 	
+	// Variables para el retroceso
+	private Vector2 knockbackVelocity = Vector2.Zero;
+	private float knockbackStrength = 200f; // Fuerza del retroceso
+	private float knockbackDecay = 0.9f; // Reducción gradual del retroceso
+	
 
 	public override void _Ready()
 	{
@@ -26,7 +31,19 @@ public partial class enemy : CharacterBody2D
 	{
 		deal_with_damage();
 
-		if (playerChased && player != null)
+		// Aplicar retroceso
+		if (knockbackVelocity != Vector2.Zero)
+		{
+			Velocity = knockbackVelocity;
+			knockbackVelocity *= knockbackDecay; // Reducir gradualmente el retroceso
+
+			// Detener el retroceso cuando sea muy pequeño
+			if (knockbackVelocity.Length() < 10f)
+			{
+				knockbackVelocity = Vector2.Zero;
+			}
+		}
+		else if (playerChased && player != null)
 		{
 			Vector2 direction = (player.Position - Position).Normalized();
 			Velocity = direction * speed;
@@ -71,7 +88,7 @@ public partial class enemy : CharacterBody2D
 	{
 		if (player_in_attack_range && globalThings.player_current_attack)
 		{
-			if (can_take_damage)
+			if (can_take_damage && player != null)
 			{
 				health -= player.GetAttackDamage();
 				take_damage_timer.Start();
@@ -79,7 +96,12 @@ public partial class enemy : CharacterBody2D
 				GD.Print("Slime health: " + health);
 				update_health();
 
-				
+				// Aplicar retroceso
+				if (player != null)
+				{
+					Vector2 knockbackDirection = (Position - player.Position).Normalized();
+					knockbackVelocity = knockbackDirection * knockbackStrength;
+				}
 
 				if (health <= 0f)
 				{
@@ -101,10 +123,13 @@ public partial class enemy : CharacterBody2D
 
 	private void _on_detection_area_body_entered(Node2D body)
 	{
-		player = body as player;
-		if (player != null)
+		if (body.HasMethod("playerItself"))
 		{
-			playerChased = true;
+			player = body as player;
+			if (player != null)
+			{
+				playerChased = true;
+			}
 		}
 		
 	}

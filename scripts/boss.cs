@@ -15,6 +15,11 @@ public partial class boss : CharacterBody2D
 	private ProgressBar healthBar;
 	private Timer take_damage_timer;
 	
+	// Variables para el retroceso
+	private Vector2 knockbackVelocity = Vector2.Zero;
+	private float knockbackStrength = 200f; // Fuerza del retroceso
+	private float knockbackDecay = 0.9f; // Reducción gradual del retroceso
+	
 
 	public override void _Ready()
 	{
@@ -28,34 +33,36 @@ public partial class boss : CharacterBody2D
 	{
 		deal_with_damage();
 		
-		if (playerChased && player != null)
-        {
-	        Position += (player.Position - Position).Normalized() * speed * (float)delta;
-	        
-	        Vector2 direction = (player.Position - Position).Normalized();
-	        
-	        if (Mathf.Abs(direction.X) > Mathf.Abs(direction.Y))
-	        {
-		        // Movimiento lateral
-		        sprite.Play("side_walk");
-		        sprite.FlipH = direction.X < 0;
-	        }
-	        else
-	        {
-		        if (direction.Y < 0)
-		        {
-			        // Movimiento hacia arriba
-			        sprite.Play("back_walk");
-		        }
-		        else
-		        {
-			        // Movimiento hacia abajo
-			        sprite.Play("front_walk");
-		        }
-	        }
-        }
+		// Aplicar retroceso
+		if (knockbackVelocity != Vector2.Zero)
+		{
+			Velocity = knockbackVelocity;
+			knockbackVelocity *= knockbackDecay; // Reducir gradualmente el retroceso
+
+			// Detener el retroceso cuando sea muy pequeño
+			if (knockbackVelocity.Length() < 10f)
+			{
+				knockbackVelocity = Vector2.Zero;
+			}
+		}
+		else if (playerChased && player != null)
+		{
+			Vector2 direction = (player.Position - Position).Normalized();
+			Velocity = direction * speed;
+
+			if (Mathf.Abs(direction.X) > Mathf.Abs(direction.Y))
+			{
+				sprite.Play("side_walk");
+				sprite.FlipH = direction.X < 0;
+			}
+			else
+			{
+				sprite.Play(direction.Y < 0 ? "back_walk" : "front_walk");
+			}
+		}
 		else
 		{
+			Velocity = Vector2.Zero;
 			sprite.Play("front_idle");
 		}
 
@@ -90,14 +97,22 @@ public partial class boss : CharacterBody2D
 				can_take_damage = false;
 				GD.Print("Slime health: " + health);
 				update_health();
+				
+				// Aplicar retroceso
+				if (player != null)
+				{
+					Vector2 knockbackDirection = (Position - player.Position).Normalized();
+					knockbackVelocity = knockbackDirection * knockbackStrength;
+				}
+				
                 if (health <= 0f)
                 {
 	                
-
 	                if (player != null)
 	                {
 		                player.SetScore(500);
 
+		                // Pa que espere a la petición de actualizar el score
 		                await ToSignal(GetTree().CreateTimer(0.5f), "timeout"); 
 						GetTree().ChangeSceneToFile("res://scenes/end_menu.tscn");
 		                

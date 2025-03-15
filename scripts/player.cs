@@ -44,6 +44,7 @@ public partial class player : CharacterBody2D
             
             GetTree().ChangeSceneToFile("res://scenes/end_menu.tscn");
         }
+        
     }
 
     public int GetScore()
@@ -155,48 +156,38 @@ public partial class player : CharacterBody2D
             }
         }
     }
-
-
-
-
-
+    
     private void player_movement(double delta)
     {
-        Vector2 velocity = Velocity;
-        
+        Vector2 velocity = Vector2.Zero; // Reiniciar la velocidad en cada frame
+
         if (Input.IsActionPressed("right"))
         {
             currentDirection = "right";
             play_animation(1);
             velocity.X = speed;
-            velocity.Y = 0;
-        } 
+        }
         else if (Input.IsActionPressed("left"))
         {
             currentDirection = "left";
             play_animation(1);
             velocity.X = -speed;
-            velocity.Y = 0;
         }
         else if (Input.IsActionPressed("down"))
         {
             currentDirection = "down";
             play_animation(1);
             velocity.Y = speed;
-            velocity.X = 0;
         }
         else if (Input.IsActionPressed("up"))
         {
             currentDirection = "up";
             play_animation(1);
             velocity.Y = -speed;
-            velocity.X = 0;
         }
         else
         {
-            play_animation(0);
-            velocity.X = 0;
-            velocity.Y = 0;
+            play_animation(0); // Animación de idle
         }
 
         Velocity = velocity;
