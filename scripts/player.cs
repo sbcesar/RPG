@@ -6,6 +6,7 @@ public partial class player : CharacterBody2D
     public static int score;
     private float speed = 100f;
     private float health = 100f;
+    private float baseAttackDamage = 20f;
     private float attackDamage = 20f;
     private String currentDirection = "none";
     private bool attack_in_progress;
@@ -283,13 +284,13 @@ public partial class player : CharacterBody2D
             if (charge_attack_timer.TimeLeft <= 0)
             {
                 sprite.SpeedScale = 0.5f;
-                attackDamage += 5f;
+                attackDamage = baseAttackDamage + 5f;  // Aplicar incremento de daño cargado
                 GD.Print("¡Ataque cargado ejecutado! Daño aumentado a: " + attackDamage);
             }
             else
             {
                 sprite.SpeedScale = 1.0f;
-                attackDamage = 20f;
+                attackDamage = baseAttackDamage; // Asegúrate de no modificar el daño base
             }
 
             // Seleccionar animación dependiendo de la dirección del jugador
@@ -319,15 +320,16 @@ public partial class player : CharacterBody2D
         attack_timer.Stop();
         globalThings.player_current_attack = false;
         attack_in_progress = false;
-        sprite.SpeedScale = 1.0f; // Restaurar la velocidad normal
+        sprite.SpeedScale = 1.0f;
 
-        // Restaurar el daño base después del ataque cargado
-        attackDamage = 20f;
+        if (attackDamage == 40f) attackDamage = 40f;
+        if (attackDamage == 20f) attackDamage = 20f;
+        
     }
     
     public void IncreaseAttackDamage(float amount)
     {
-        attackDamage += amount;
-        GD.Print("Nuevo daño de ataque: " + attackDamage);
+        baseAttackDamage += amount;
+        GD.Print("Nuevo daño de ataque base: " + baseAttackDamage);
     }
 }
