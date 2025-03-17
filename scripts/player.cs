@@ -9,6 +9,7 @@ public partial class player : CharacterBody2D
     private float attackDamage = 20f;
     private String currentDirection = "none";
     private bool attack_in_progress;
+    private bool isChargingAttack = false;
     private bool enemy_in_attack_range;
     private bool enemy_attack_cooldown = true;
     private bool player_alive = true;
@@ -17,6 +18,7 @@ public partial class player : CharacterBody2D
     private Timer timer;
     private Timer attack_timer;
     private Timer regen_timer;
+    private Timer charge_attack_timer;
 
     public override void _Ready()
     {
@@ -25,6 +27,7 @@ public partial class player : CharacterBody2D
         timer = GetNode<Timer>("attack_cooldown");
         attack_timer = GetNode<Timer>("deal_attack");
         regen_timer = GetNode<Timer>("regen_timer");
+        charge_attack_timer = GetNode<Timer>("charge_attack");
         sprite.Play("front_idle");
     }
 
@@ -32,7 +35,7 @@ public partial class player : CharacterBody2D
     {
         player_movement(delta);
         enemy_attack();
-        attack();
+        Attack();
         update_health();
         showMenu();
         
@@ -261,44 +264,65 @@ public partial class player : CharacterBody2D
         }
     }
 
-    private void attack()
+    private void Attack()
     {
         String dir = currentDirection;
+
         if (Input.IsActionJustPressed("attack"))
         {
-            globalThings.player_current_attack = true;
-            attack_in_progress = true;
+            isChargingAttack = true;
+            charge_attack_timer.Start();
+        }
 
-            if (dir == "right")
+        if (Input.IsActionJustReleased("attack"))
+        {
+            attack_in_progress = true;
+            globalThings.player_current_attack = true;
+
+            // Aplicar daño cargado si se completó la carga
+            if (charge_attack_timer.TimeLeft <= 0)
             {
-                sprite.FlipH = false;
-                sprite.Play("side_attack");
-                attack_timer.Start();
+                sprite.SpeedScale = 0.5f;
+                attackDamage += 5f;
+                GD.Print("¡Ataque cargado ejecutado! Daño aumentado a: " + attackDamage);
             }
-            if (dir == "left")
+            else
             {
-                sprite.FlipH = true;
-                sprite.Play("side_attack");
-                attack_timer.Start();
+                sprite.SpeedScale = 1.0f;
+                attackDamage = 20f;
             }
-            if (dir == "down")
+
+            // Seleccionar animación dependiendo de la dirección del jugador
+            if (dir == "right" || dir == "left")
+            {
+                sprite.Play("side_attack");
+                sprite.FlipH = (dir == "left");
+            }
+            else if (dir == "down")
             {
                 sprite.Play("front_attack");
-                attack_timer.Start();
             }
-            if (dir == "up")
+            else if (dir == "up")
             {
                 sprite.Play("back_attack");
-                attack_timer.Start();
             }
+
+            attack_timer.Start();
+            charge_attack_timer.Stop();
+            isChargingAttack = false;
         }
     }
 
+    // Restaurar velocidad y daño después del ataque
     private void _on_deal_attack_timeout()
     {
         attack_timer.Stop();
         globalThings.player_current_attack = false;
         attack_in_progress = false;
+        sprite.SpeedScale = 1.0f; // Restaurar la velocidad normal
+
+        // Restaurar el daño base después del ataque cargado
+        attackDamage = 20f;
     }
     
     public void IncreaseAttackDamage(float amount)
