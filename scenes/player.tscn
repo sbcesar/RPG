@@ -1,8 +1,9 @@
-[gd_scene load_steps=59 format=3 uid="uid://cmo1l6rdmvygf"]
+[gd_scene load_steps=60 format=3 uid="uid://cmo1l6rdmvygf"]
 
 [ext_resource type="Script" path="res://scripts/player.cs" id="1_fglgb"]
 [ext_resource type="Texture2D" uid="uid://li5q4l2r5o27" path="res://sprites/characters/player.png" id="2_tfo3f"]
 [ext_resource type="Texture2D" uid="uid://cmlaajfxxip12" path="res://sprites/tilesets/background/background_menu.jpeg" id="3_4tgqu"]
+[ext_resource type="PackedScene" uid="uid://cot12h1p4vo2p" path="res://scenes/buff_icon.tscn" id="4_b6l2d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ef8uq"]
 atlas = ExtResource("2_tfo3f")
@@ -489,6 +490,11 @@ show_percentage = false
 
 [node name="charge_attack" type="Timer" parent="."]
 one_shot = true
+
+[node name="buff_icon" parent="." instance=ExtResource("4_b6l2d")]
+visible = false
+position = Vector2(-4, -18)
+scale = Vector2(0.15, 0.15)
 
 [connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]

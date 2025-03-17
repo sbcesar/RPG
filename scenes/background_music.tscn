@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b24arocbaxbl6"]
+
+[ext_resource type="AudioStream" uid="uid://bfsj6ed4a3hxf" path="res://assets/audio/Azalea Town - Pokémon HeartGold & SoulSilver OST.mp3" id="1_wg0sl"]
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_wg0sl")
+volume_db = -10.0
+autoplay = true

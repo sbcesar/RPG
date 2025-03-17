@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bfsj6ed4a3hxf"
+path="res://.godot/imported/Azalea Town - Pokémon HeartGold & SoulSilver OST.mp3-67882a2a0a557da9b57a6b0a77f779fb.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/Azalea Town - Pokémon HeartGold & SoulSilver OST.mp3"
+dest_files=["res://.godot/imported/Azalea Town - Pokémon HeartGold & SoulSilver OST.mp3-67882a2a0a557da9b57a6b0a77f779fb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

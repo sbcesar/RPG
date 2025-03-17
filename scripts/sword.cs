@@ -11,7 +11,7 @@ public partial class sword : Area2D
         {
             playerNode.IncreaseAttackDamage(DamageIncrease);
             QueueFree();
-            GD.Print("Daño incrementado en: " + DamageIncrease);
+            GD.Print("+" + DamageIncrease + " damage");
         }
     }
 }

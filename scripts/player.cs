@@ -15,6 +15,7 @@ public partial class player : CharacterBody2D
     private bool enemy_attack_cooldown = true;
     private bool player_alive = true;
     private AnimatedSprite2D sprite;
+    private Sprite2D buffIcon;
     private ProgressBar healthBar;
     private Timer timer;
     private Timer attack_timer;
@@ -24,6 +25,7 @@ public partial class player : CharacterBody2D
     public override void _Ready()
     {
         sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        buffIcon = GetNode<Sprite2D>("buff_icon");
         healthBar = GetNode<ProgressBar>("ProgressBar");
         timer = GetNode<Timer>("attack_cooldown");
         attack_timer = GetNode<Timer>("deal_attack");
@@ -305,6 +307,7 @@ public partial class player : CharacterBody2D
     
     public void IncreaseAttackDamage(float amount)
     {
+        buffIcon.Visible = true;
         baseAttackDamage += amount;
         GD.Print("Nuevo daño de ataque base: " + baseAttackDamage);
     }

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cot12h1p4vo2p"]
+
+[ext_resource type="Texture2D" uid="uid://cq4g417ag2njn" path="res://sprites/items/more items/Shikashi's Fantasy Icons Pack v2/#2 - Transparent Icons & Drop Shadow.png" id="1_0g5mt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6h6b"]
+atlas = ExtResource("1_0g5mt")
+region = Rect2(131, 36, 28, 27)
+
+[node name="buff_icon" type="Sprite2D"]
+texture = SubResource("AtlasTexture_y6h6b")
