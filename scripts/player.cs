@@ -38,7 +38,11 @@ public partial class player : CharacterBody2D
         enemy_attack();
         Attack();
         update_health();
-        showMenu();
+        
+        if (Input.IsActionJustPressed("options"))
+        {
+            PauseGame();
+        }
         
         
         if (health <= 0)
@@ -49,6 +53,14 @@ public partial class player : CharacterBody2D
             GetTree().ChangeSceneToFile("res://scenes/end_menu.tscn");
         }
         
+    }
+
+    private void PauseGame()
+    {
+        GetTree().Paused = true;
+        
+        var pauseMenu = GD.Load<PackedScene>("res://scenes/pause_menu.tscn").Instantiate<PauseMenu>();
+        GetTree().Root.AddChild(pauseMenu);
     }
 
     public int GetScore()
@@ -126,39 +138,6 @@ public partial class player : CharacterBody2D
     private void update_health()
     {
         healthBar.Value = health;
-    }
-
-    private void showMenu()
-    {
-        // Verifica si la acción "options" ha sido presionada
-        if (Input.IsActionJustPressed("options"))
-        {
-            GD.Print("Options button pressed"); // Mensaje de depuración
-
-            // Verifica en qué escena estamos actualmente
-            if (GetTree().CurrentScene.Name == "menu")
-            {
-                GD.Print("Currently in the menu scene, changing to world"); // Mensaje de depuración
-                // Cambiar a la escena "world"
-                GetTree().ChangeSceneToFile("res://scenes/world.tscn");
-            }
-            else if (GetTree().CurrentScene.Name == "world")
-            {
-                GD.Print("Currently in the world scene, changing to menu"); // Mensaje de depuración
-                // Cambiar a la escena "menu"
-                GetTree().ChangeSceneToFile("res://scenes/menu.tscn");
-            }
-            else if (GetTree().CurrentScene.Name == "route2")
-            {
-                GD.Print("Currently in the route 2 scene, changing to menu"); // Mensaje de depuración
-                // Cambiar a la escena "menu"
-                GetTree().ChangeSceneToFile("res://scenes/menu.tscn");
-            }
-            else
-            {
-                GD.Print("Not in menu or world or route 2 scene"); // Mensaje de depuración
-            }
-        }
     }
     
     private void player_movement(double delta)
@@ -279,21 +258,19 @@ public partial class player : CharacterBody2D
         {
             attack_in_progress = true;
             globalThings.player_current_attack = true;
-
-            // Aplicar daño cargado si se completó la carga
+            
             if (charge_attack_timer.TimeLeft <= 0)
             {
                 sprite.SpeedScale = 0.5f;
-                attackDamage = baseAttackDamage + 5f;  // Aplicar incremento de daño cargado
+                attackDamage = baseAttackDamage + 5f;
                 GD.Print("¡Ataque cargado ejecutado! Daño aumentado a: " + attackDamage);
             }
             else
             {
                 sprite.SpeedScale = 1.0f;
-                attackDamage = baseAttackDamage; // Asegúrate de no modificar el daño base
+                attackDamage = baseAttackDamage;
             }
-
-            // Seleccionar animación dependiendo de la dirección del jugador
+            
             if (dir == "right" || dir == "left")
             {
                 sprite.Play("side_attack");
@@ -313,8 +290,7 @@ public partial class player : CharacterBody2D
             isChargingAttack = false;
         }
     }
-
-    // Restaurar velocidad y daño después del ataque
+    
     private void _on_deal_attack_timeout()
     {
         attack_timer.Stop();
