@@ -298,6 +298,7 @@ radius = 9.51315
 [node name="boss" type="CharacterBody2D"]
 scale = Vector2(2, 2)
 collision_layer = 2
+motion_mode = 1
 script = ExtResource("1_pe46b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

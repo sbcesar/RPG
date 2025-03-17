@@ -415,8 +415,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gipk3"]
-radius = 8.0
-height = 19.0
+radius = 5.0
+height = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l6jc7"]
 texture = ExtResource("3_4tgqu")
@@ -438,7 +438,7 @@ animation = &"side_idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
-position = Vector2(0, -3)
+position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_gipk3")
 
 [node name="Panel" type="Panel" parent="CollisionShape2D"]
